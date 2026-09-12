@@ -1,0 +1,22 @@
+services:
+  # 開発用: ソース変更が即反映されるVite開発サーバー
+  dev:
+    container_name: ito-techo-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+
+  # 本番相当: ビルドしてnginxで配信
+  web:
+    container_name: ito-techo-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
